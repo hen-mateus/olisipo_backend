@@ -55,5 +55,3 @@ app.use('/tipoparceria', tipoParceriaRoute);
 app.listen(PORT, () => {
   console.log(`Servidor na porta ${PORT}`);
 });
-
-//teste
