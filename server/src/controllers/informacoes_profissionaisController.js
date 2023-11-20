@@ -27,7 +27,7 @@ informacoesProfissionaisController.create = async (req, res) => {
         titulo_param,
         descricao_param,
         documento_param,
-        password_tipo_paramparam
+        tipo_param
     } = req.body;
 
     try {
@@ -37,7 +37,7 @@ informacoesProfissionaisController.create = async (req, res) => {
           '${titulo_param}',
           '${descricao_param}',
           '${documento_param}',
-          '${password_tipo_paramparam}'
+          '${tipo_param}'
         )
       `;
 
@@ -60,7 +60,7 @@ informacoesProfissionaisController.delete = async (req, res) => {
         )
       `;
         await sequelize.query(query);
-        res.json({ success: true, message: 'Informação profissional apagada com sucesso!', deleted: query });
+        res.json({ success: true, message: 'Informação profissional apagada com sucesso!'});
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }

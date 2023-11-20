@@ -43,9 +43,9 @@ recibosVencimentoController.create = async (req, res) => {
     try {
         const query = `
         CALL InserirReciboVencimento(
-          ${data_submissao_recibo_param},
-          ${recibo_pdf_param},
-          '${id_pessoa_param}',
+          '${data_submissao_recibo_param}',
+          '${recibo_pdf_param}',
+          ${id_pessoa_param},
           '${confirmacao_submissao_recibo_param}',
           '${data_recibo_param}'
         )
@@ -77,7 +77,7 @@ recibosVencimentoController.update = async (req, res) => {
           ${data_submissao_recibo_param ? `'${data_submissao_recibo_param}'` : 'NULL'},
           ${recibo_pdf_param ? `'${recibo_pdf_param}'` : 'NULL'},
           ${id_pessoa_param !== undefined ? id_pessoa_param : 'NULL'},
-          ${confirmacao_submissao_recibo_param !== undefined ? confirmacao_submissao_recibo_param : 'NULL'},
+          ${confirmacao_submissao_recibo_param !== null ? confirmacao_submissao_recibo_param : 'NULL'},
           ${data_recibo_param ? `'${data_recibo_param}'` : 'NULL'}
         )
       `;

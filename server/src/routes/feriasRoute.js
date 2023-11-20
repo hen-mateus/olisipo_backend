@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const feriasController = require('../controllers/ajudascustoController');
+const feriasController = require('../controllers/feriasController');
 
 router.get('/', feriasController.list);
 router.get('/:id', feriasController.getId);

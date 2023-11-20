@@ -5,7 +5,7 @@ const estadosController = {};
 
 estadosController.listComPagamento = async (req, res) => {
     try {
-        const query = 'SELECT tipo_estado FROM vista_estados_com_pagamento;';
+        const query = `SELECT tipo_estado FROM vista_estados_com_pagamento;`;
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         res.json({ success: true, data: data });

@@ -66,7 +66,7 @@ parceriasController.update = async (req, res) => {
           ${nova_descricao_param ? `'${nova_descricao_param}'` : 'NULL'},
           ${novos_beneficios_param ? `'${novos_beneficios_param}'` : 'NULL'},
           ${nova_imagem_param ? `'${nova_imagem_param}'` : 'NULL'},
-          ${nova_publicacao_param ? `'${nova_publicacao_param}'` : 'NULL'}
+          ${nova_publicacao_param !== null ? nova_publicacao_param : 'NULL'}
         )
       `;
 
@@ -89,7 +89,7 @@ parceriasController.delete = async (req, res) => {
         )
       `;
         await sequelize.query(query);
-        res.json({ success: true, message: 'Parceria apagada com sucesso!', deleted: query });
+        res.json({ success: true, message: 'Parceria apagada com sucesso!'});
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }

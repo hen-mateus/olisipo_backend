@@ -41,7 +41,7 @@ reuniaoRHController.create = async (req, res) => {
     try {
         const query = `
         CALL InserirReuniaoRH(
-          ${data_reuniao_param},
+          '${data_reuniao_param}',
           '${motivo_param}',
           '${horas_param}'
         )

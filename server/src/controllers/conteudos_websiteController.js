@@ -75,7 +75,7 @@ conteudosWebsiteController.delete = async (req, res) => {
         )
       `;
         await sequelize.query(query);
-        res.json({ success: true, message: 'Secção apagada com sucesso!', deleted: query });
+        res.json({ success: true, message: 'Secção apagada com sucesso!'});
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
@@ -126,7 +126,7 @@ conteudosWebsiteController.updateHeader = async (req, res) => {
 
     try {
         const query = `
-        CALL AtualizarConteudoWebsiteSeccao(
+        CALL AtualizarConteudoWebsiteHeader(
           ${id},
           ${novo_titulo_header_param ? `'${novo_titulo_header_param}'` : 'NULL'},
           ${nova_imagem_header_param ? `'${nova_imagem_header_param}'` : 'NULL'},
@@ -155,7 +155,7 @@ conteudosWebsiteController.updateFooter = async (req, res) => {
 
     try {
         const query = `
-        CALL AtualizarConteudoWebsiteSeccao(
+        CALL AtualizarConteudoWebsiteFooter(
           ${id},
           ${novo_texto_footer_param ? `'${novo_texto_footer_param}'` : 'NULL'},
           ${novo_titulo_footer_param ? `'${novo_titulo_footer_param}'` : 'NULL'},

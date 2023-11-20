@@ -66,7 +66,7 @@ noticiasController.update = async (req, res) => {
           ${novo_subtitulo_param ? `'${novo_subtitulo_param}'` : 'NULL'},
           ${novo_corpo_param ? `'${novo_corpo_param}'` : 'NULL'},
           ${nova_imagem_param ? `'${nova_imagem_param}'` : 'NULL'},
-          ${nova_publicacao_param ? `'${nova_publicacao_param}'` : 'NULL'}
+          ${nova_publicacao_param !== null ? nova_publicacao_param : 'NULL'}
         )
       `;
 
@@ -89,7 +89,7 @@ noticiasController.delete = async (req, res) => {
         )
       `;
         await sequelize.query(query);
-        res.json({ success: true, message: 'Noticia apagada com sucesso!', deleted: query });
+        res.json({ success: true, message: 'Noticia apagada com sucesso!'});
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }

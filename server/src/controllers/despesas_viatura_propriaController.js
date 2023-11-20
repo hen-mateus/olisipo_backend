@@ -49,7 +49,7 @@ despesasViaturaController.create = async (req, res) => {
           '${data_deslocacao_param}',
           '${ponto_origem_param}',
           '${ponto_chegada_param}',
-          ${confirmacao_despesas_param},
+          ${confirmacao_despesas_param}
         )
       `;
 
