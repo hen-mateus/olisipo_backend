@@ -15,6 +15,7 @@ ajudasCustoController.list = async (req, res) => {
     }
 };
 
+
 ajudasCustoController.getId = async (req, res) => {
     const { id } = req.params;
 
