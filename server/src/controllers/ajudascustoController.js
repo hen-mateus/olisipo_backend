@@ -60,5 +60,4 @@ ajudasCustoController.create = async (req, res) => {
     }
 };
 
-
 module.exports = ajudasCustoController;

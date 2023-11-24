@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
+const cookieParser = require("cookie-parser");
+const { createTokens, validateToken } = require("./jwt");
+
 const PORT = process.env.PORT || 3000;
 
 const ajudasCustoRoute = require('./routes/ajudasCustoRoute');
@@ -27,6 +30,7 @@ app.use(cors());
 
 // Middlewares
 app.use(express.json());
+app.use(cookieParser());
 
 // Rota básica de exemplo
 app.get('/', (req, res) => {
@@ -50,6 +54,11 @@ app.use('/recibosvenc', recibosVencimentoRoute);
 app.use('/reuniao', reuniaoRHRoute);
 app.use('/tiponoticia', tipoNoticiaRoute);
 app.use('/tipoparceria', tipoParceriaRoute);
+
+app.get("/profile", validateToken, (req, res) => {
+  res.json("profile");
+});
+
 
 // Iniciando o servidor
 app.listen(PORT, () => {

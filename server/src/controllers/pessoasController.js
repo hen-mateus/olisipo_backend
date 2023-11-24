@@ -2,7 +2,89 @@ const Sequelize = require('sequelize');
 const sequelize = require('../models/database');
 const Pessoas = require('../models/pessoas');
 
+const bcrypt = require('bcrypt');
+const cookieParser = require("cookie-parser");
+const { createTokens, validateToken } = require("../jwt");
+
 const pessoasController = {};
+
+pessoasController.register = async (req, res) => {
+    const { pes_id_param,
+        id_tipo_param,
+        nome_pessoa_param,
+        email_param,
+        password_param,
+        cliente_param,
+        ativa_param,
+        deleted_param,
+        curriculo_param,
+        numero_colaborador_param,
+        contribuinte_param } = req.body;
+
+    try {
+        const hashedPassword = await bcrypt.hash(password_param, 10);
+
+        const query = `
+            CALL InserirPessoa(
+                ${pes_id_param},
+                ${id_tipo_param},
+                '${nome_pessoa_param}',
+                '${email_param}',
+                '${hashedPassword}',
+                '${cliente_param}',
+                ${ativa_param},
+                ${deleted_param},
+                '${curriculo_param}',
+                ${numero_colaborador_param},
+                '${contribuinte_param}'
+            )
+        `;
+
+        await sequelize.query(query);
+
+        res.json({ success: true, message: 'Usuário registrado com sucesso' });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
+pessoasController.login = async (req, res) => {
+    const { email_param, pass_param } = req.body;
+
+    try {
+        const query = `
+            SELECT email, password FROM pessoas WHERE email = '${email_param}'
+        `;
+
+        const [users, metadata] = await sequelize.query(query, { type: sequelize.QueryTypes.SELECT });
+
+        console.log("Users:", users);
+        console.log(users.password)
+
+        if (!users || users.length === 0) {
+            return res.status(400).json({ error: "User Doesn't Exist" });
+        }
+
+        const dbPassword = users.password;
+
+        bcrypt.compare(pass_param, dbPassword).then((match) => {
+            if (!match) {
+                res.status(400).json({ error: "Wrong Username and Password Combination!" });
+            } else {
+                const accessToken = createTokens(users);
+
+                res.cookie("access-token", accessToken, {
+                    maxAge: 60 * 60 * 24 * 30 * 1000,
+                    httpOnly: true,
+                });
+
+                res.json("LOGGED IN");
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 pessoasController.list = async (req, res) => {
     try {
