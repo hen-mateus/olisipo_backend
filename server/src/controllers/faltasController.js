@@ -35,13 +35,14 @@ faltasController.getId = async (req, res) => {
 
 faltasController.create = async (req, res) => {
     const {
-        id_pessoa_param,
+      
         data_falta_param,
         horas_faltadas_param,
         justificacao_param,
         confirmacao_faltas_param
     } = req.body;
 
+    const id_pessoa_param = req.userId;
     try {
         const query = `
         CALL InserirFalta(

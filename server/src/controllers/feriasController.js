@@ -34,13 +34,14 @@ feriasController.getId = async (req, res) => {
 
 feriasController.create = async (req, res) => {
     const {
-        id_pessoa_param,
+        
         data_inicio_param,
         data_fim_param,
         data_submissao_param,
         confirmacao_ferias_param
     } = req.body;
 
+    const id_pessoa_param = req.userId;
     try {
         const query = `
         CALL InserirFerias(

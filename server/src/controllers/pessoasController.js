@@ -53,7 +53,7 @@ pessoasController.login = async (req, res) => {
 
     try {
         const query = `
-            SELECT email, password FROM pessoas WHERE email = '${email_param}'
+            SELECT id_pessoa, email, password FROM pessoas WHERE email = '${email_param}'
         `;
 
         const [users, metadata] = await sequelize.query(query, { type: sequelize.QueryTypes.SELECT });
@@ -98,10 +98,10 @@ pessoasController.list = async (req, res) => {
 };
 
 pessoasController.getId = async (req, res) => {
-    const { id } = req.params;
+    const id_pessoa_param = req.userId;
 
     try {
-        const query = `SELECT * FROM pessoas WHERE id_pessoa = ${id}`;
+        const query = `SELECT * FROM pessoas WHERE id_pessoa = ${id_pessoa_param}`;
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         if (data.length > 0) {
@@ -155,7 +155,7 @@ pessoasController.create = async (req, res) => {
 };
 
 pessoasController.update = async (req, res) => {
-    const { id } = req.params;
+    const id_pessoa_param = req.userId;
 
     const {
         nome_pessoa_param,
@@ -170,7 +170,7 @@ pessoasController.update = async (req, res) => {
     try {
         const query = `
         CALL AtualizarPessoa(
-          ${id},
+          ${id_pessoa_param},
           ${nome_pessoa_param ? `'${nome_pessoa_param}'` : 'NULL'},
           ${pass_pessoa_param ? `'${pass_pessoa_param}'` : 'NULL'},
           ${email_param ? `'${email_param}'` : 'NULL'},

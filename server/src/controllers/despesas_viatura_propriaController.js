@@ -33,13 +33,15 @@ despesasViaturaController.getId = async (req, res) => {
 
 despesasViaturaController.create = async (req, res) => {
     const {
-        id_pessoa_param,
+
         quilometros_param,
         data_deslocacao_param,
         ponto_origem_param,
         ponto_chegada_param,
         confirmacao_despesas_param
     } = req.body;
+    
+    const id_pessoa_param = req.userId;
 
     try {
         const query = `

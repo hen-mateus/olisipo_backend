@@ -1,13 +1,14 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../models/database');
-const AjudasCusto = require('../models/ajudas_custo');
 
 const ajudasCustoController = {};
 
 ajudasCustoController.list = async (req, res) => {
     try {
-        const query = 'SELECT * FROM ajudas_custo;';
-        const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
+        const query = 'SELECT ajudas_custo.*, pessoas.nome_pessoa FROM ajudas_custo INNER JOIN pessoas ON ajudas_custo.id_pessoa = pessoas.id_pessoa;';
+        const data = await sequelize.query(query, {
+            type: Sequelize.QueryTypes.SELECT
+        });
 
         res.json({ success: true, data: data });
     } catch (error) {
@@ -34,12 +35,13 @@ ajudasCustoController.getId = async (req, res) => {
 
 ajudasCustoController.create = async (req, res) => {
     const {
-        id_pessoa_param,
         valor_ajuda_param,
         descritivo_ajuda_param,
         fatura_ajuda_param,
         confirmacao_despesas_param
     } = req.body;
+
+    const id_pessoa_param = req.userId;
 
     try {
         const query = `

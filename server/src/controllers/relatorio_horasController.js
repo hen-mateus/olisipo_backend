@@ -33,13 +33,14 @@ horasController.getId = async (req, res) => {
 
 horasController.create = async (req, res) => {
     const {
-        id_pessoa_param,
         data_relatorio_param,
         mes_param,
         horas_efetuadas_param,
         confirmacao_relatorio_param,
         ano_relatorio_param
     } = req.body;
+
+    const id_pessoa_param = req.userId;
 
     try {
         const query = `

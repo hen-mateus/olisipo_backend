@@ -23,7 +23,6 @@ conteudosWebsiteController.getId = async (req, res) => {
 
 conteudosWebsiteController.create = async (req, res) => {
     const {
-        id_pessoa_param,
         titulo_header_param,
         imagem_header_param,
         texto1_param,
@@ -37,6 +36,7 @@ conteudosWebsiteController.create = async (req, res) => {
         imagem_seccao_param
     } = req.body;
 
+    const id_pessoa_param = req.userId;
     try {
         const query = `
         CALL InserirConteudoWebsite(

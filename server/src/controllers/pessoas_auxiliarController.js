@@ -22,10 +22,11 @@ pessoasAuxiliarController.getId = async (req, res) => {
 
 pessoasAuxiliarController.create = async (req, res) => {
     const {
-        id_pessoa_param,
         nome_auxiliar_param,
         email_auxiliar_param
     } = req.body;
+
+    const id_pessoa_param = req.userId;
 
     try {
         const query = `

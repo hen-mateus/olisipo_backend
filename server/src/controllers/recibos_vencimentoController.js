@@ -15,10 +15,10 @@ recibosVencimentoController.list = async (req, res) => {
 };
 
 recibosVencimentoController.getId = async (req, res) => {
-    const { id } = req.params;
+    const id_pessoa_param = req.userId;
 
     try {
-        const query = `SELECT * FROM recibos_vencimento WHERE id_pessoa = ${id}`;
+        const query = `SELECT * FROM recibos_vencimento WHERE id_pessoa = ${id_pessoa_param}`;
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         if (data.length > 0) {
@@ -32,10 +32,11 @@ recibosVencimentoController.getId = async (req, res) => {
 };
 
 recibosVencimentoController.create = async (req, res) => {
+    const id_pessoa_param = req.userId;
+    
     const {
         data_submissao_recibo_param,
         recibo_pdf_param,
-        id_pessoa_param,
         confirmacao_submissao_recibo_param,
         data_recibo_param
     } = req.body;
@@ -62,10 +63,11 @@ recibosVencimentoController.create = async (req, res) => {
 recibosVencimentoController.update = async (req, res) => {
     const { id } = req.params;
 
+    const id_pessoa_param = req.userId;
+
     const {
         data_submissao_recibo_param,
         recibo_pdf_param,
-        id_pessoa_param,
         confirmacao_submissao_recibo_param,
         data_recibo_param
     } = req.body;
