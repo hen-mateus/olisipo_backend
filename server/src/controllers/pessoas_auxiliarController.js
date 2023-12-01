@@ -3,6 +3,19 @@ const sequelize = require('../models/database');
 
 const pessoasAuxiliarController = {};
 
+pessoasAuxiliarController.list = async (req, res) => {
+    try {
+        const query = 'SELECT pessoas_auxiliar.*, pessoas.nome_pessoa, pessoas.email FROM pessoas_auxiliar INNER JOIN pessoas ON pessoas_auxiliar.id_pessoa = pessoas.id_pessoa;';
+        const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
+
+        res.json({ success: true, data: data });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
+
+
 pessoasAuxiliarController.getId = async (req, res) => {
     const { id } = req.params;
 

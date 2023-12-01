@@ -4,6 +4,7 @@ const pessoasAuxiliarController = require('../controllers/pessoas_auxiliarContro
 
 const { createTokens, validateToken } = require("../jwt");
 
+router.get('/', pessoasAuxiliarController.list);
 router.get('/:id', pessoasAuxiliarController.getId);
 router.post('/create/', validateToken, pessoasAuxiliarController.create);
 

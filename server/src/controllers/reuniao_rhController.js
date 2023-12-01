@@ -5,7 +5,7 @@ const reuniaoRHController = {};
 
 reuniaoRHController.list = async (req, res) => {
     try {
-        const query = 'SELECT * FROM reuniao_rh;';
+        const query = 'SELECT reuniao_rh.*, pessoas.nome_pessoa FROM reuniao_rh INNER JOIN relacao_pessoas_reuniao ON reuniao_rh.id_reuniao = relacao_pessoas_reuniao.id_reuniao INNER JOIN pessoas ON relacao_pessoas_reuniao.id_pessoa = pessoas.id_pessoa;';
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         res.json({ success: true, data: data });
