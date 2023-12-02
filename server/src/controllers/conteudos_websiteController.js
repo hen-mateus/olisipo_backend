@@ -172,4 +172,14 @@ conteudosWebsiteController.updateFooter = async (req, res) => {
     }
 };
 
+conteudosWebsiteController.list = async (req, res) => {
+    try {
+        const query = 'SELECT * FROM conteudos_website where id_conteudo >=3;';
+        const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
+
+        res.json({ success: true, data: data });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
 module.exports = conteudosWebsiteController;

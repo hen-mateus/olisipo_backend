@@ -4,6 +4,7 @@ const conteudosWebsiteController = require('../controllers/conteudos_websiteCont
 
 const { createTokens, validateToken } = require("../jwt");
 
+router.get('/', conteudosWebsiteController.list);
 router.get('/:id', conteudosWebsiteController.getId);
 router.post('/create/', validateToken, conteudosWebsiteController.create);
 router.delete('/delete/', conteudosWebsiteController.delete);
