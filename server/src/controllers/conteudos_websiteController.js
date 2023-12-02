@@ -75,7 +75,7 @@ conteudosWebsiteController.delete = async (req, res) => {
         )
       `;
         await sequelize.query(query);
-        res.json({ success: true, message: 'Secção apagada com sucesso!'});
+        res.json({ success: true, message: 'Secção apagada com sucesso!' });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
