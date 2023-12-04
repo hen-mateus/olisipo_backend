@@ -24,6 +24,7 @@ const recibosVencimentoRoute = require('./routes/recibosVencimentoRoute');
 const reuniaoRHRoute = require('./routes/reuniaoRHRoute');
 const tipoNoticiaRoute = require('./routes/tipoNoticiaRoute');
 const tipoParceriaRoute = require('./routes/tipoParceriaRoute');
+const tipoPessoaRoute = require('./routes/tipoPessoaRoute');
 
 // Configurar CORS
 app.use(cors());
@@ -54,6 +55,7 @@ app.use('/recibosvenc', recibosVencimentoRoute);
 app.use('/reuniao', reuniaoRHRoute);
 app.use('/tiponoticia', tipoNoticiaRoute);
 app.use('/tipoparceria', tipoParceriaRoute);
+app.use('/roles', tipoPessoaRoute);
 
 app.get("/profile", validateToken, (req, res) => {
   res.json("profile");
