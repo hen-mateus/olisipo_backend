@@ -97,6 +97,24 @@ pessoasController.list = async (req, res) => {
     }
 };
 
+
+pessoasController.listManagers = async (req, res) => {
+    try {
+        const query = `
+        SELECT pessoas.*
+        FROM pessoas
+        JOIN tipo_de_pessoas ON pessoas.id_tipo = tipo_de_pessoas.id_tipo
+        WHERE tipo_de_pessoas.tipo = 'Manager';
+    `;
+        const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
+
+        res.json({ success: true, data: data });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
+
 pessoasController.getId = async (req, res) => {
     const id_pessoa_param = req.userId;
 
