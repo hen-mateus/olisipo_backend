@@ -5,6 +5,7 @@ const pessoasController = require('../controllers/pessoasController');
 const { createTokens, validateToken } = require("../jwt");
 
 router.get('/', pessoasController.list);
+router.get('/managers', pessoasController.listManagers);
 router.get('/getId', validateToken, pessoasController.getId);
 //router.post('/create/', pessoasController.create);
 router.put('/update/', validateToken, pessoasController.update);
