@@ -14,6 +14,23 @@ parceriasController.list = async (req, res) => {
     }
 };
 
+parceriasController.getId = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const query = `SELECT * FROM parcerias WHERE id_parceria = ${id}`;
+        const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
+
+        if (data.length > 0) {
+            res.json({ success: true, data: data });
+        } else {
+            res.status(404).json({ success: false, message: 'Parceria não encontrada' });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
 
 parceriasController.create = async (req, res) => {
     const {
@@ -66,7 +83,7 @@ parceriasController.update = async (req, res) => {
           ${nova_descricao_param ? `'${nova_descricao_param}'` : 'NULL'},
           ${novos_beneficios_param ? `'${novos_beneficios_param}'` : 'NULL'},
           ${nova_imagem_param ? `'${nova_imagem_param}'` : 'NULL'},
-          ${nova_publicacao_param !== null ? nova_publicacao_param : 'NULL'}
+          ${nova_publicacao_param !== undefined ? nova_publicacao_param : 'NULL'}
         )
       `;
 

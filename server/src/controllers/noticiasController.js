@@ -95,9 +95,7 @@ noticiasController.update = async (req, res) => {
 };
 
 noticiasController.delete = async (req, res) => {
-    const {
-        id_noticia_param
-    } = req.body;
+    const {id_noticia_param} = req.body;
     try {
         const query = `
         CALL ExcluirNoticia(
