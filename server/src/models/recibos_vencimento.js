@@ -24,11 +24,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     confirmacao_submissao_recibo: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: true
     },
     data_recibo: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,
