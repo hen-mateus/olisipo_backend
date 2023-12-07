@@ -25,6 +25,7 @@ const reuniaoRHRoute = require('./routes/reuniaoRHRoute');
 const tipoNoticiaRoute = require('./routes/tipoNoticiaRoute');
 const tipoParceriaRoute = require('./routes/tipoParceriaRoute');
 const tipoPessoaRoute = require('./routes/tipoPessoaRoute');
+const relacaoEstadosRoute = require('./routes/relacaoEstadosRoute');
 
 // Configurar CORS
 app.use(cors());
@@ -56,6 +57,7 @@ app.use('/reuniao', reuniaoRHRoute);
 app.use('/tiponoticia', tipoNoticiaRoute);
 app.use('/tipoparceria', tipoParceriaRoute);
 app.use('/roles', tipoPessoaRoute);
+app.use('/relacaoestados', relacaoEstadosRoute);
 
 app.get("/profile", validateToken, (req, res) => {
   res.json("profile");
