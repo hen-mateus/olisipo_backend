@@ -6,6 +6,6 @@ const { createTokens, validateToken } = require("../jwt");
 
 router.get('/',validateToken, informacoesProfissionaisController.getId);
 router.post('/create/', validateToken, informacoesProfissionaisController.create);
-router.delete('/delete/', informacoesProfissionaisController.delete);
+router.delete('/delete/', validateToken, informacoesProfissionaisController.delete);
 
 module.exports = router;

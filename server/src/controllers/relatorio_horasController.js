@@ -5,7 +5,7 @@ const horasController = {};
 
 horasController.list = async (req, res) => {
     try {
-        const query = 'SELECT relatorio_horas.*, pessoas.nome_pessoa FROM relatorio_horas INNER JOIN pessoas ON relatorio_horas.id_pessoa = pessoas.id_pessoa;';
+        const query = 'SELECT relatorio_horas.*, pessoas.nome_pessoa FROM relatorio_horas INNER JOIN pessoas ON relatorio_horas.id_pessoa = pessoas.id_pessoa WHERE NOT EXISTS ( SELECT 1 FROM relacao_horas_estado WHERE relacao_horas_estado.id_relatorio_horas = relatorio_horas.id_relatorio_horas AND relacao_horas_estado.id_estado IN (1, 2) );';
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         res.json({ success: true, data: data });
@@ -51,7 +51,7 @@ horasController.create = async (req, res) => {
           '${horas_efetuadas_param}',
           ${confirmacao_relatorio_param},
           ${ano_relatorio_param}
-        )
+        );
       `;
 
         await sequelize.query(query);

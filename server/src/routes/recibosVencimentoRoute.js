@@ -5,8 +5,8 @@ const recibosVencimentoController = require('../controllers/recibos_vencimentoCo
 const { createTokens, validateToken } = require("../jwt");
 
 router.get('/', recibosVencimentoController.list);
-router.get('/getId', validateToken, recibosVencimentoController.getId);
+router.get('/:id', recibosVencimentoController.getId);
 router.post('/create/', validateToken, recibosVencimentoController.create);
-router.put('/update/', validateToken, recibosVencimentoController.update);
+router.put('/update/:id', validateToken, recibosVencimentoController.update);
 
 module.exports = router;

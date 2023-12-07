@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const tipoNoticiaControllerController = require('../controllers/tipo_noticiaController');
+const tipoNoticiaController = require('../controllers/tipo_noticiaController');
 
-router.get('/', tipoNoticiaControllerController.list);
-router.post('/create/', tipoNoticiaControllerController.create);
-router.put('/update/:id', tipoNoticiaControllerController.update);
+const { createTokens, validateToken } = require("../jwt");
+
+router.get('/', tipoNoticiaController.list);
+router.post('/create/', validateToken, tipoNoticiaController.create);
+router.put('/update/:id', validateToken, tipoNoticiaController.update);
 
 module.exports = router;

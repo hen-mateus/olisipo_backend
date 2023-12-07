@@ -5,7 +5,7 @@ const recibosVencimentoController = {};
 
 recibosVencimentoController.list = async (req, res) => {
     try {
-        const query = 'SELECT * FROM recibos_vencimento;';
+        const query = 'SELECT recibos_vencimento.*, pessoas.nome_pessoa FROM recibos_vencimento INNER JOIN pessoas ON recibos_vencimento.id_pessoa = pessoas.id_pessoa;';
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         res.json({ success: true, data: data });
@@ -15,10 +15,10 @@ recibosVencimentoController.list = async (req, res) => {
 };
 
 recibosVencimentoController.getId = async (req, res) => {
-    const id_pessoa_param = req.userId;
+    const { id } = req.params;
 
     try {
-        const query = `SELECT * FROM recibos_vencimento WHERE id_pessoa = ${id_pessoa_param}`;
+        const query = `SELECT * FROM recibos_vencimento WHERE id_recibo = ${id}`;
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         if (data.length > 0) {
@@ -33,9 +33,8 @@ recibosVencimentoController.getId = async (req, res) => {
 
 recibosVencimentoController.create = async (req, res) => {
     const id_pessoa_param = req.userId;
-    
+
     const {
-        data_submissao_recibo_param,
         recibo_pdf_param,
         confirmacao_submissao_recibo_param,
         data_recibo_param
@@ -44,7 +43,7 @@ recibosVencimentoController.create = async (req, res) => {
     try {
         const query = `
         CALL InserirReciboVencimento(
-          '${data_submissao_recibo_param}',
+            CURRENT_TIMESTAMP,
           '${recibo_pdf_param}',
           ${id_pessoa_param},
           '${confirmacao_submissao_recibo_param}',
@@ -63,9 +62,8 @@ recibosVencimentoController.create = async (req, res) => {
 recibosVencimentoController.update = async (req, res) => {
     const { id } = req.params;
 
-    const id_pessoa_param = req.userId;
-
     const {
+        id_pessoa_param,
         data_submissao_recibo_param,
         recibo_pdf_param,
         confirmacao_submissao_recibo_param,
@@ -79,7 +77,7 @@ recibosVencimentoController.update = async (req, res) => {
           ${data_submissao_recibo_param ? `'${data_submissao_recibo_param}'` : 'NULL'},
           ${recibo_pdf_param ? `'${recibo_pdf_param}'` : 'NULL'},
           ${id_pessoa_param !== undefined ? id_pessoa_param : 'NULL'},
-          ${confirmacao_submissao_recibo_param !== null ? confirmacao_submissao_recibo_param : 'NULL'},
+          ${confirmacao_submissao_recibo_param !== undefined ? confirmacao_submissao_recibo_param : 'NULL'},
           ${data_recibo_param ? `'${data_recibo_param}'` : 'NULL'}
         )
       `;
