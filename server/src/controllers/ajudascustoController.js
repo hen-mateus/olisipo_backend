@@ -5,7 +5,7 @@ const ajudasCustoController = {};
 
 ajudasCustoController.list = async (req, res) => {
     try {
-        const query = 'SELECT ajudas_custo.*, pessoas.nome_pessoa FROM ajudas_custo INNER JOIN pessoas ON ajudas_custo.id_pessoa = pessoas.id_pessoa;';
+        const query = 'SELECT ajudas_custo.*, pessoas.nome_pessoa FROM ajudas_custo INNER JOIN pessoas ON ajudas_custo.id_pessoa = pessoas.id_pessoa WHERE NOT EXISTS ( SELECT 1 FROM relacao_ajudas_estado WHERE relacao_ajudas_estado.id_ajuda_custo = ajudas_custo.id_ajuda_custo AND relacao_ajudas_estado.id_estado IN (1, 2) );';
         const data = await sequelize.query(query, {
             type: Sequelize.QueryTypes.SELECT
         });

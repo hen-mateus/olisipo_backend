@@ -7,6 +7,6 @@ const { createTokens, validateToken } = require("../jwt");
 router.get('/', recibosVencimentoController.list);
 router.get('/:id', recibosVencimentoController.getId);
 router.post('/create/', validateToken, recibosVencimentoController.create);
-router.put('/update/:id', recibosVencimentoController.update);
+router.put('/update/:id', validateToken, recibosVencimentoController.update);
 
 module.exports = router;
