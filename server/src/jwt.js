@@ -1,30 +1,26 @@
-    const { sign, verify } = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
-    const createTokens = (user) => {
-        const accessToken = sign(
-            { username: user.email, id: user.id_pessoa },
-            "jwtolisipo"
-        );
+const createTokens = (user) => {
+    const accessToken = jwt.sign(
+        { username: user.email, id: user.id_pessoa },
+        "jwtolisipo"
+    );
+    return accessToken;
+};
 
-        return accessToken;
-    };
+const validateToken = (req, res, next) => {
+    const token = req.headers.authorization;
+    if (!token) {
+        return res.status(401).json({ message: 'Token não fornecido' });
+    }
+    try {
+        const decoded = jwt.verify(token.split(' ')[1], 'jwtolisipo');
+        // Faça algo com o `decoded`, como adicionar o usuário ao objeto `req` ou `res`
+        req.userId = decoded.id;
+        next();
+    } catch (error) {
+        return res.status(403).json({ message: 'Token inválido' });
+    }
+};
 
-    const validateToken = (req, res, next) => {
-        const accessToken = req.cookies["access-token"];
-
-        if (!accessToken)
-            return res.status(400).json({ error: "User not Authenticated!" });
-        try {
-            const validToken = verify(accessToken, "jwtolisipo");
-            if (validToken) {
-                //aqui dá para devolver o id do token - minuto 39 - PedroTech
-                req.userId = validToken.id;
-                req.authenticated = true;
-                return next();
-            }
-        } catch (err) {
-            return res.status(400).json({ error: err });
-        }
-    };
-
-    module.exports = { createTokens, validateToken };
+module.exports = { createTokens, validateToken };

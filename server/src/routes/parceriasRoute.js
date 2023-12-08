@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const parceriasController = require('../controllers/parceriasController');
 
-const { createTokens, validateToken } = require("../jwt");
+const { validateToken } = require("../jwt");
 
 router.get('/', parceriasController.list);
 router.get('/:id', parceriasController.getId);

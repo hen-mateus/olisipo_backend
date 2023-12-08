@@ -59,7 +59,6 @@ pessoasController.login = async (req, res) => {
         const [users, metadata] = await sequelize.query(query, { type: sequelize.QueryTypes.SELECT });
 
         console.log("Users:", users);
-        console.log(users.password)
 
         if (!users || users.length === 0) {
             return res.status(400).json({ error: "User Doesn't Exist" });
@@ -78,7 +77,8 @@ pessoasController.login = async (req, res) => {
                     httpOnly: true,
                 });
 
-                res.json("LOGGED IN");
+                console.log(accessToken)
+                res.json({ success: true, message: 'Login bem-sucedido', token: accessToken })
             }
         });
     } catch (error) {
@@ -119,7 +119,7 @@ pessoasController.getId = async (req, res) => {
     const id_pessoa_param = req.userId;
 
     try {
-        const query = `SELECT * FROM pessoas WHERE id_pessoa = ${id_pessoa_param}`;
+        const query = `SELECT pessoas.*, tipo_de_pessoas.tipo FROM pessoas JOIN tipo_de_pessoas ON pessoas.id_tipo=tipo_de_pessoas.id_tipo WHERE id_pessoa = ${id_pessoa_param}`;
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         if (data.length > 0) {

@@ -4,7 +4,7 @@ const relacaoEstadosController = require('../controllers/relacaoEstadosControlle
 
 const { createTokens, validateToken } = require("../jwt");
 
-router.post('/createhoras',validateToken, relacaoEstadosController.createHoras);
+router.post('/createhoras', validateToken, relacaoEstadosController.createHoras);
 router.post('/createajudas', validateToken, relacaoEstadosController.createAjudas);
 router.post('/createdespesas', validateToken, relacaoEstadosController.createDespesasViatura);
 router.post('/createfaltas', validateToken, relacaoEstadosController.createFaltas);
