@@ -3,5 +3,6 @@ const router = express.Router();
 const notificacoesController = require('../controllers/notificacoesController');
 
 router.get('/', notificacoesController.list);
+router.put('/marcarTodasComoLidas', notificacoesController.marcarTodasComoLidas);
 
 module.exports = router;
