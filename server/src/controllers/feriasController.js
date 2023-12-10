@@ -6,7 +6,7 @@ const feriasController = {};
 
 feriasController.list = async (req, res) => {
     try {
-        const query = 'SELECT ferias.*, pessoas.nome_pessoa FROM ferias INNER JOIN pessoas ON ferias.id_pessoa = pessoas.id_pessoa WHERE NOT EXISTS ( SELECT 1 FROM relacao_ferias_estado WHERE relacao_ferias_estado.id_ferias = ferias.id_ferias AND relacao_ferias_estado.id_estado IN (1, 2) );';
+        const query = 'SELECT ferias.*, pessoas.nome_pessoa, estados.tipo_estado FROM ferias INNER JOIN pessoas ON ferias.id_pessoa = pessoas.id_pessoa LEFT JOIN relacao_ferias_estado ON relacao_ferias_estado.id_ferias = ferias.id_ferias INNER JOIN estados ON estados.id_estado = relacao_ferias_estado.id_estado WHERE NOT EXISTS ( SELECT 1 FROM relacao_ferias_estado WHERE relacao_ferias_estado.id_ferias = ferias.id_ferias AND relacao_ferias_estado.id_estado IN (1, 2) );';
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         res.json({ success: true, data: data });
