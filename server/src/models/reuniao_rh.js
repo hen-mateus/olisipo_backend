@@ -17,6 +17,10 @@ module.exports = function(sequelize, DataTypes) {
     horas: {
       type: DataTypes.TIME,
       allowNull: false
+    },
+    confirmar_reuniao: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
     }
   }, {
     sequelize,
