@@ -36,7 +36,7 @@ app.use(cookieParser());
 
 // Rota básica de exemplo
 app.get('/', (req, res) => {
-  res.send('Bem-vindo à minha API!');
+  res.send('Bem-vindo à API do portal do Colaborador da Olisipo!');
 });
 
 app.use('/ajudascusto', ajudasCustoRoute);
@@ -58,11 +58,6 @@ app.use('/tiponoticia', tipoNoticiaRoute);
 app.use('/tipoparceria', tipoParceriaRoute);
 app.use('/roles', tipoPessoaRoute);
 app.use('/relacaoestados', relacaoEstadosRoute);
-
-app.get("/profile", validateToken, (req, res) => {
-  res.json("profile");
-});
-
 
 // Iniciando o servidor
 app.listen(PORT, () => {

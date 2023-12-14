@@ -1,13 +1,19 @@
-var Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize(
-    'olisipo_pi4',
-    'postgres',
-    'henrique77',
+    'db_portal_olisipo',
+    'db_portal_olisipo',
+    'qflG7GsWqMA9hqwYxzwnAvSbDs9l70ht',
     {
-        host: 'localhost',
-        port: '5432',
-        dialect: 'postgres'
+        host: 'dpg-cltist8cmk4c738sp7ag-a.oregon-postgres.render.com',
+        port: 5432,
+        dialect: 'postgres',
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        }
     }
 );
 
