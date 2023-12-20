@@ -207,4 +207,39 @@ pessoasController.update = async (req, res) => {
     }
 };
 
+pessoasController.updateDados = async (req, res) => {
+    const { id } = req.params;
+
+    const {
+        nome_pessoa_param,
+        pass_pessoa_param,
+        email_param,
+        ativa_param,
+        deleted_param,
+        curriculo_param,
+        cliente_param
+    } = req.body;
+
+    try {
+        const query = `
+        CALL AtualizarPessoa(
+          ${id},
+          ${nome_pessoa_param ? `'${nome_pessoa_param}'` : 'NULL'},
+          ${pass_pessoa_param ? `'${pass_pessoa_param}'` : 'NULL'},
+          ${email_param ? `'${email_param}'` : 'NULL'},
+          ${ativa_param !== undefined ? ativa_param : 'NULL'},
+          ${deleted_param !== undefined ? deleted_param : 'NULL'},
+          ${curriculo_param ? `'${curriculo_param}'` : 'NULL'},
+          ${cliente_param ? `'${cliente_param}'` : 'NULL'}
+        )
+      `;
+
+        await sequelize.query(query);
+
+        res.json({ success: true, message: 'Pessoa atualizada com sucesso!' });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
 module.exports = pessoasController;

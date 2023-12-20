@@ -21,6 +21,10 @@ module.exports = function(sequelize, DataTypes) {
     email_auxiliar: {
       type: DataTypes.TEXT,
       allowNull: false
+    },
+    confirmar_dados: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
     }
   }, {
     sequelize,
