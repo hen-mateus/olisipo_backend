@@ -7,6 +7,7 @@ noticiasController.list = async (req, res) => {
     try {
         const query = 'SELECT noticias.*, tipo_noticia.tipo_noticia FROM noticias INNER JOIN tipo_noticia ON noticias.id_tipo_noticia = tipo_noticia.id_tipo_noticia;';
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
+        
 
         res.json({ success: true, data: data });
     } catch (error) {
@@ -20,9 +21,11 @@ noticiasController.getId = async (req, res) => {
     try {
         const query = `SELECT * FROM noticias WHERE id_noticia = ${id}`;
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
+        const query1 = 'SELECT * FROM tipo_noticia;';
+        const data1 = await sequelize.query(query1, { type: Sequelize.QueryTypes.SELECT });
 
         if (data.length > 0) {
-            res.json({ success: true, data: data });
+            res.json({ success: true, data: data, data1:data1 });
         } else {
             res.status(404).json({ success: false, message: 'Noticia não encontrada' });
         }
