@@ -37,7 +37,7 @@ appMobileController.list = async (req, res) => {
 
         const query7 = `
 		SELECT
-            pessoas.*,
+            
             estados.tipo_estado,
             faltas.data_falta
         FROM pessoas
@@ -49,7 +49,7 @@ appMobileController.list = async (req, res) => {
 
         const query8 = `
 		SELECT
-            pessoas.*,
+           
             estados.tipo_estado,
             ferias.data_submissao
         FROM pessoas
@@ -61,7 +61,7 @@ appMobileController.list = async (req, res) => {
 
         const query9 = `
 		SELECT
-            pessoas.*,
+            
             estados.tipo_estado,
             relatorio_horas.data_relatorio_horas
         FROM pessoas
@@ -73,7 +73,7 @@ appMobileController.list = async (req, res) => {
 
         const query10 = `
 		SELECT
-            pessoas.*,
+            
             estados.tipo_estado,
             ajudas_custo.valor_ajuda
         FROM pessoas
