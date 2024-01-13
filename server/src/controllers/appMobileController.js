@@ -25,7 +25,7 @@ appMobileController.list = async (req, res) => {
 
         const query6 = `
 		SELECT
-            pessoas.*,
+           
             estados.tipo_estado,
             despesas_viatura_propria.data_deslocacao
         FROM pessoas
