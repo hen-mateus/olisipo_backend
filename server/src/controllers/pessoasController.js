@@ -3,6 +3,7 @@ const sequelize = require('../models/database');
 const Pessoas = require('../models/pessoas');
 
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 const cookieParser = require("cookie-parser");
 const { createTokens, validateToken } = require("../jwt");
 
@@ -42,10 +43,40 @@ pessoasController.register = async (req, res) => {
 
         await sequelize.query(query);
 
+        sendWelcomeEmail(email_param, nome_pessoa_param, password_param);
         res.json({ success: true, message: 'Usuário registrado com sucesso' });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
+};
+
+// Função para enviar e-mail de boas-vindas com informações de e-mail e senha
+const sendWelcomeEmail = (email, nome, senha) => {
+    const transporter = nodemailer.createTransport({
+        // Configurações do seu serviço de e-mail (ex: Gmail, Outlook, etc.)
+        host: 'smtp.office365.com',  // Servidor SMTP do Outlook
+        port: 587,  // Porta SMTP padrão
+        secure: false,  // Define se a conexão deve usar SSL/TLS (no caso do Outlook, deixe como false)
+        auth: {
+            user: 'olisipoteste@outlook.pt',
+            pass: 'Testeolisipo',
+        },
+    });
+
+    const mailOptions = {
+        from: 'olisipoteste@outlook.pt',
+        to: email,
+        subject: 'Bem-vindo ao portal do colaborador Olisipo',
+        text: `Olá ${nome},\n\nBem-vindo à nossa aplicação! Aqui estão os seus dados de login.\n\nSeu endereço de e-mail: ${email}\nSua senha: ${senha}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email enviado: ' + info.response);
+        }
+    });
 };
 
 pessoasController.login = async (req, res) => {

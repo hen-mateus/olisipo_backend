@@ -7,6 +7,7 @@ const { createTokens, validateToken } = require("./jwt");
 
 const PORT = process.env.PORT || 3000;
 
+const appMobileRoute = require('./routes/appMobileRoute');
 const ajudasCustoRoute = require('./routes/ajudasCustoRoute');
 const conteudosWebsiteRoute = require('./routes/conteudosWebsiteRoute');
 const despesasPropriaRoute = require('./routes/despesasPropriaRoute');
@@ -39,6 +40,7 @@ app.get('/', (req, res) => {
   res.send('Bem-vindo à API do portal do Colaborador da Olisipo!');
 });
 
+app.use('/appMobile', appMobileRoute);
 app.use('/ajudascusto', ajudasCustoRoute);
 app.use('/conteudowebsite', conteudosWebsiteRoute);
 app.use('/despesasviatura', despesasPropriaRoute);
