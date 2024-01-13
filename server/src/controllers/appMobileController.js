@@ -4,7 +4,7 @@ const sequelize = require('../models/database');
 const appMobileController = {};
 
 appMobileController.list = async (req, res) => {
-    const id_pessoa_param = req.userId;
+    const id_pessoa_param = 1;
 
     try {
         const query = 'SELECT parcerias.*, tipo_parceria.tipo_parceria FROM parcerias INNER JOIN tipo_parceria ON parcerias.id_tipo_parceria = tipo_parceria.id_tipo_parceria;';
