@@ -7,13 +7,14 @@ parceriasController.list = async (req, res) => {
     try {
         const query = 'SELECT parcerias.*, tipo_parceria.tipo_parceria FROM parcerias INNER JOIN tipo_parceria ON parcerias.id_tipo_parceria = tipo_parceria.id_tipo_parceria;';
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
+        const query1 = 'SELECT * FROM tipo_parceria;';
+        const data2 = await sequelize.query(query1, { type: Sequelize.QueryTypes.SELECT });
 
-        res.json({ success: true, data: data });
+        res.json({ success: true, data: data,data2:data2 });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
 };
-
 parceriasController.getId = async (req, res) => {
     const { id } = req.params;
 

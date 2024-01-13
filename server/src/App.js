@@ -7,6 +7,7 @@ const { createTokens, validateToken } = require("./jwt");
 
 const PORT = process.env.PORT || 3000;
 
+const appMobileRoute = require('./routes/appMobileRoute');
 const ajudasCustoRoute = require('./routes/ajudasCustoRoute');
 const conteudosWebsiteRoute = require('./routes/conteudosWebsiteRoute');
 const despesasPropriaRoute = require('./routes/despesasPropriaRoute');
@@ -36,9 +37,10 @@ app.use(cookieParser());
 
 // Rota básica de exemplo
 app.get('/', (req, res) => {
-  res.send('Bem-vindo à minha API!');
+  res.send('Bem-vindo à API do portal do Colaborador da Olisipo!');
 });
 
+app.use('/appMobile', appMobileRoute);
 app.use('/ajudascusto', ajudasCustoRoute);
 app.use('/conteudowebsite', conteudosWebsiteRoute);
 app.use('/despesasviatura', despesasPropriaRoute);
@@ -58,11 +60,6 @@ app.use('/tiponoticia', tipoNoticiaRoute);
 app.use('/tipoparceria', tipoParceriaRoute);
 app.use('/roles', tipoPessoaRoute);
 app.use('/relacaoestados', relacaoEstadosRoute);
-
-app.get("/profile", validateToken, (req, res) => {
-  res.json("profile");
-});
-
 
 // Iniciando o servidor
 app.listen(PORT, () => {
