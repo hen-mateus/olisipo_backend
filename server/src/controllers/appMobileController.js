@@ -7,12 +7,12 @@ appMobileController.list = async (req, res) => {
     const id_pessoa_param = 1;
 
     try {
-        const query = 'SELECT parcerias.*, tipo_parceria.tipo_parceria FROM parcerias INNER JOIN tipo_parceria ON parcerias.id_tipo_parceria = tipo_parceria.id_tipo_parceria;';
+        const query = 'SELECT parcerias.*, tipo_parceria.tipo_parceria FROM parcerias INNER JOIN tipo_parceria ON parcerias.id_tipo_parceria = tipo_parceria.id_tipo_parceria WHERE parcerias.parceria_publicada = true;';
         const parcerias = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
         const query1 = 'SELECT * FROM tipo_parceria;';
         const tipoParcerias = await sequelize.query(query1, { type: Sequelize.QueryTypes.SELECT });
 
-        const query2 = 'SELECT noticias.*, tipo_noticia.tipo_noticia FROM noticias INNER JOIN tipo_noticia ON noticias.id_tipo_noticia = tipo_noticia.id_tipo_noticia;';
+        const query2 = 'SELECT noticias.*, tipo_noticia.tipo_noticia FROM noticias INNER JOIN tipo_noticia ON noticias.id_tipo_noticia = tipo_noticia.id_tipo_noticia WHERE noticias.noticia_publicada = true;';
         const noticias = await sequelize.query(query2, { type: Sequelize.QueryTypes.SELECT });
         const query3 = 'SELECT * FROM tipo_noticia;';
         const tipoNoticias = await sequelize.query(query3, { type: Sequelize.QueryTypes.SELECT });
