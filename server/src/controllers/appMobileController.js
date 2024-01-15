@@ -17,7 +17,7 @@ appMobileController.list = async (req, res) => {
         const query3 = 'SELECT * FROM tipo_noticia;';
         const tipoNoticias = await sequelize.query(query3, { type: Sequelize.QueryTypes.SELECT });
 
-        const query4 = `SELECT pessoas.*, tipo_de_pessoas.tipo FROM pessoas JOIN tipo_de_pessoas ON pessoas.id_tipo=tipo_de_pessoas.id_tipo WHERE id_pessoa = ${id_pessoa_param}`;
+        const query4 = `SELECT tipo_de_pessoas.tipo FROM pessoas JOIN tipo_de_pessoas ON pessoas.id_tipo=tipo_de_pessoas.id_tipo WHERE id_pessoa = ${id_pessoa_param}`;
         const dadosPessoais = await sequelize.query(query4, { type: Sequelize.QueryTypes.SELECT });
 
         const query5 = `SELECT * FROM informacoes_profissionais WHERE id_pessoa = ${id_pessoa_param}`;
@@ -113,7 +113,7 @@ appMobileController.list = async (req, res) => {
         ${id_pessoa_param};`;
         const recibos = await sequelize.query(query12, { type: Sequelize.QueryTypes.SELECT });
 
-        res.json({ success: true, parcerias: parcerias, tipoParcerias: tipoParcerias, noticias: noticias, tipoNoticias: tipoNoticias, dadosPessoais: dadosPessoais, informacoesProfissionais: informacoesProfissionais, despesasViatura: despesasViatura, faltas: faltas, ferias: ferias, horas: horas, ajudas: ajudas, reunioes: reunioes, recibos:recibos });
+        res.json({ success: true, parcerias: parcerias, tipoParcerias: tipoParcerias, noticias: noticias, tipoNoticias: tipoNoticias, dadosPessoais: dadosPessoais, informacoesProfissionais: informacoesProfissionais, despesasViatura: despesasViatura, faltas: faltas, ferias: ferias, horas: horas, ajudas: ajudas, reunioes: reunioes, recibos: recibos });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
