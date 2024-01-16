@@ -110,7 +110,7 @@ appMobileController.list = async (req, res) => {
         const query12 = `SELECT *
         FROM recibos_vencimento
         WHERE id_pessoa =
-        ${id_pessoa_param};`;
+        ${id_pessoa_param} and confirmacao_submissao_recibo= true;`;
         const recibos = await sequelize.query(query12, { type: Sequelize.QueryTypes.SELECT });
 
         res.json({ success: true, parcerias: parcerias, tipoParcerias: tipoParcerias, noticias: noticias, tipoNoticias: tipoNoticias, dadosPessoais: dadosPessoais, informacoesProfissionais: informacoesProfissionais, despesasViatura: despesasViatura, faltas: faltas, ferias: ferias, horas: horas, ajudas: ajudas, reunioes: reunioes, recibos: recibos });
