@@ -4,6 +4,6 @@ const appMobileController = require('../controllers/appMobileController');
 const { createTokens, validateToken } = require("../jwt");
 
 
-app.get('/sua-rota', validateToken, appMobileController.list);
+app.get('/', validateToken, appMobileController.list);
 
 module.exports = router;
