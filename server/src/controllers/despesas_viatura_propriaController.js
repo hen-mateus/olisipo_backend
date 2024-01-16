@@ -41,7 +41,7 @@ despesasViaturaController.create = async (req, res) => {
         confirmacao_despesas_param
     } = req.body;
     
-    const id_pessoa_param = 1;
+    const id_pessoa_param = req.userId;
 
     try {
         const query = `
