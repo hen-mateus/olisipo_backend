@@ -32,6 +32,8 @@ reuniaoRHController.getId = async (req, res) => {
 };
 
 reuniaoRHController.create = async (req, res) => {
+    const id_pessoa_param = req.userId;
+
     const obterPesIdQuery = `
     SELECT pes_id_pessoa 
     FROM pessoas 
