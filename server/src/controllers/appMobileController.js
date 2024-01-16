@@ -5,6 +5,7 @@ const appMobileController = {};
 
 appMobileController.list = async (req, res) => {
     const id_pessoa_param = req.userId;
+console.log("AppMobile ID:" + id_pessoa_param);
 
     try {
         const query = 'SELECT parcerias.*, tipo_parceria.tipo_parceria FROM parcerias INNER JOIN tipo_parceria ON parcerias.id_tipo_parceria = tipo_parceria.id_tipo_parceria WHERE parcerias.parceria_publicada = true;';
