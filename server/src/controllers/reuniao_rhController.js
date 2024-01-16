@@ -41,6 +41,16 @@ reuniaoRHController.create = async (req, res) => {
     const id_pessoa_param = req.userId;
 
     try {
+        const obterUltimoIdQuery = `
+            SELECT MAX(id_reuniao) AS ultimo_id
+            FROM reuniao_rh;
+        `;
+
+        const [ultimoIdResult] = await sequelize.query(obterUltimoIdQuery);
+        const ultimoId = ultimoIdResult[0].ultimo_id || 0;
+
+        const novoIdReuniao = ultimoId + 1;
+
         const inserirReuniaoQuery = `
             CALL InserirReuniaoRH(
                 '${data_reuniao_param}',
@@ -48,30 +58,34 @@ reuniaoRHController.create = async (req, res) => {
                 '${horas_param}'
             );
         `;
-
         await sequelize.query(inserirReuniaoQuery);
 
         const obterPesIdQuery = `
-    SELECT pes_id_pessoa 
-    FROM pessoas 
-    WHERE id_pessoa = ${id_pessoa_param};
-`;
+            SELECT pes_id_pessoa
+            FROM pessoas
+            WHERE id_pessoa = ${id_pessoa_param};
+        `;
 
         const [pesIdResult] = await sequelize.query(obterPesIdQuery);
 
-        // Verificar se a consulta retornou resultados
         if (pesIdResult.length > 0 && pesIdResult[0].pes_id_pessoa !== undefined) {
             const pes_id_pessoa_param = pesIdResult[0].pes_id_pessoa;
 
-            // Inserir relação pessoa-reunião
-            const inserirRelacaoQuery = `
-        CALL inserirrelacaopessoasreuniao_man(
-            ${id_pessoa_param},
-            ${pes_id_pessoa_param}
-        );
-    `;
+            const inserirRelacaoManQuery = `
+                CALL inserirrelacaopessoasreuniao_man(
+                    ${novoIdReuniao},
+                    ${pes_id_pessoa_param}
+                );
+            `;
+            await sequelize.query(inserirRelacaoManQuery);
 
-            await sequelize.query(inserirRelacaoQuery);
+            const inserirRelacaoColQuery = `
+                CALL inserirrelacaopessoasreuniao_col(
+                    ${novoIdReuniao},
+                    ${id_pessoa_param}
+                );
+            `;
+            await sequelize.query(inserirRelacaoColQuery);
 
             res.json({ success: true, message: 'Reunião inserida com sucesso!' });
         } else {
