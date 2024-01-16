@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     horas_efetuadas: {
-      type: DataTypes.TIME,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     confirmacao_relatorio_horas: {
