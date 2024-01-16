@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     horas_faltadas: {
-      type: DataTypes.TIME,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     justificacao: {
