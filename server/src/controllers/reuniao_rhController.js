@@ -38,22 +38,42 @@ reuniaoRHController.create = async (req, res) => {
         horas_param
     } = req.body;
 
-    try {
-        const query = `
-        CALL InserirReuniaoRH(
-          '${data_reuniao_param}',
-          '${motivo_param}',
-          '${horas_param}'
-        )
-      `;
+    const id_pessoa_param = req.userId;
 
-        await sequelize.query(query);
+    try {
+        const inserirReuniaoQuery = `
+            CALL InserirReuniaoRH(
+                '${data_reuniao_param}',
+                '${motivo_param}',
+                '${horas_param}'
+            );
+        `;
+
+        await sequelize.query(inserirReuniaoQuery);
+
+        const obterPesIdQuery = `
+            SELECT pes_id_pessoa
+            FROM pessoas
+            WHERE id_pessoa = ${id_pessoa_param};
+        `;
+
+        const [[{ pes_id_pessoa_param }]] = await sequelize.query(obterPesIdQuery);
+
+        const inserirRelacaoQuery = `
+            CALL inserirrelacaopessoasreuniao_man(
+                ${id_pessoa_param},
+                ${pes_id_pessoa_param}
+            );
+        `;
+
+        await sequelize.query(inserirRelacaoQuery);
 
         res.json({ success: true, message: 'Reunião inserida com sucesso!' });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
 };
+
 
 reuniaoRHController.update = async (req, res) => {
     const { id } = req.params;
