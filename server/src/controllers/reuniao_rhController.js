@@ -92,7 +92,7 @@ reuniaoRHController.create = async (req, res) => {
             res.status(404).json({ success: false, error: 'Pes_id_pessoa não encontrado para o id_pessoa informado.' });
         }
     } catch (error) {
-console.error('Erro no servidor:', error);
+        console.error('Erro no servidor:', error);
         res.status(500).json({ success: false, error: error.message });
     }
 };
