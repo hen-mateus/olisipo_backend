@@ -48,7 +48,7 @@ horasController.create = async (req, res) => {
           ${id_pessoa_param},
           '${data_relatorio_param}',
           '${mes_param}',
-          '${horas_efetuadas_param}',
+          ${horas_efetuadas_param},
           ${confirmacao_relatorio_param},
           ${ano_relatorio_param}
         );
