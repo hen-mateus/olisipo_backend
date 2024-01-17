@@ -182,4 +182,26 @@ conteudosWebsiteController.list = async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 };
+
+conteudosWebsiteController.listHeader = async (req, res) => {
+    try {
+        const query = 'SELECT * FROM conteudos_website where id_conteudo =1;';
+        const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
+
+        res.json({ success: true, data: data });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
+conteudosWebsiteController.listFooter = async (req, res) => {
+    try {
+        const query = 'SELECT * FROM conteudos_website where id_conteudo =2;';
+        const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
+
+        res.json({ success: true, data: data });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
 module.exports = conteudosWebsiteController;
