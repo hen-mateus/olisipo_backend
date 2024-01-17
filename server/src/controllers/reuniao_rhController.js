@@ -73,16 +73,16 @@ reuniaoRHController.create = async (req, res) => {
 
             const inserirRelacaoManQuery = `
                 CALL inserirrelacaopessoasreuniao_man(
-                    ${novoIdReuniao},
-                    ${pes_id_pessoa_param}
+                    ${pes_id_pessoa_param},
+                    ${novoIdReuniao}
                 );
             `;
             await sequelize.query(inserirRelacaoManQuery);
 
             const inserirRelacaoColQuery = `
                 CALL inserirrelacaopessoasreuniao_col(
-                    ${novoIdReuniao},
-                    ${id_pessoa_param}
+                    ${id_pessoa_param},
+                    ${novoIdReuniao}
                 );
             `;
             await sequelize.query(inserirRelacaoColQuery);
