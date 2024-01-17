@@ -35,7 +35,7 @@ faltasController.getId = async (req, res) => {
 
 faltasController.create = async (req, res) => {
     const {
-      
+
         data_falta_param,
         horas_faltadas_param,
         justificacao_param,
@@ -58,6 +58,7 @@ faltasController.create = async (req, res) => {
 
         res.json({ success: true, message: 'Falta inserida com sucesso!' });
     } catch (error) {
+        console.error('Erro no servidor:', error);
         res.status(500).json({ success: false, error: error.message });
     }
 };
