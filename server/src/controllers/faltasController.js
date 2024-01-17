@@ -48,7 +48,7 @@ faltasController.create = async (req, res) => {
         CALL InserirFalta(
           ${id_pessoa_param},
           '${data_falta_param}',
-          '${horas_faltadas_param}',
+          ${horas_faltadas_param},
           '${justificacao_param}',
           ${confirmacao_faltas_param}
         )
