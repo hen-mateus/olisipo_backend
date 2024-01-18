@@ -280,4 +280,28 @@ pessoasController.updateDados = async (req, res) => {
     }
 };
 
+pessoasController.updatePorEmail = async (req, res) => {
+    const email_param = req.userEmail;
+
+    const pass_param = req.body.pass_pessoa_param;
+
+    try {
+        let hashedPassword = pass_param;
+
+        if (pass_param) {
+            hashedPassword = await bcrypt.hash(pass_param, 10);
+        }
+
+        const query = `
+            UPDATE pessoas SET password='${hashedPassword}' WHERE email='${email_param}';
+        `;
+
+        await sequelize.query(query);
+
+        res.json({ success: true, message: 'Pessoa atualizada com sucesso!' });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
 module.exports = pessoasController;
