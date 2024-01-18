@@ -52,12 +52,12 @@ informacoesProfissionaisController.create = async (req, res) => {
 
 informacoesProfissionaisController.delete = async (req, res) => {
     const {
-        id_informacao_param
+        titulo_informacao_param
     } = req.body;
     try {
         const query = `
         CALL ExcluirInformacaoProfissional(
-          ${id_informacao_param}
+          '${titulo_informacao_param}'
         )
       `;
         await sequelize.query(query);
