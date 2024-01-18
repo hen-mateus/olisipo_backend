@@ -217,11 +217,17 @@ pessoasController.update = async (req, res) => {
     } = req.body;
 
     try {
+        let hashedPassword = pass_pessoa_param;
+
+        if (pass_pessoa_param) {
+            hashedPassword = await bcrypt.hash(pass_pessoa_param, 10);
+        }
+
         const query = `
         CALL AtualizarPessoa(
           ${id_pessoa_param},
           ${nome_pessoa_param ? `'${nome_pessoa_param}'` : 'NULL'},
-          ${pass_pessoa_param ? `'${pass_pessoa_param}'` : 'NULL'},
+          '${hashedPassword}',
           ${email_param ? `'${email_param}'` : 'NULL'},
           ${ativa_param !== undefined ? ativa_param : 'NULL'},
           ${deleted_param !== undefined ? deleted_param : 'NULL'},
@@ -237,6 +243,7 @@ pessoasController.update = async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 };
+
 
 pessoasController.updateDados = async (req, res) => {
     const { id } = req.params;
