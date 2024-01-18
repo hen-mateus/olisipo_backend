@@ -9,7 +9,7 @@ router.get('/header/', conteudosWebsiteController.listHeader);
 router.get('/footer/', conteudosWebsiteController.listFooter);
 router.get('/:id', conteudosWebsiteController.getId);
 router.post('/create/', validateToken, conteudosWebsiteController.create);
-router.delete('/delete/', validateToken, conteudosWebsiteController.delete);
+router.post('/delete/', validateToken, conteudosWebsiteController.delete);
 router.put('/updateseccao/:id', validateToken, conteudosWebsiteController.updateSeccao);
 router.put('/updateheader/:id', validateToken, conteudosWebsiteController.updateHeader);
 router.put('/updatefooter/:id', validateToken, conteudosWebsiteController.updateFooter);
