@@ -9,6 +9,7 @@ router.get('/managers', pessoasController.listManagers);
 router.get('/getId', validateToken, pessoasController.getId);
 //router.post('/create/', pessoasController.create);
 router.put('/update/', validateToken, pessoasController.update);
+router.put('/updatepormail/', pessoasController.updatePorEmail);
 router.put('/updatedados/:id', validateToken, pessoasController.updateDados);
 router.post('/login', pessoasController.login);
 router.post('/register', pessoasController.register);
