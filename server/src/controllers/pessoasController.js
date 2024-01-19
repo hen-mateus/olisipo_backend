@@ -111,7 +111,7 @@ pessoasController.login = async (req, res) => {
 
     try {
         const query = `
-            SELECT id_pessoa, email, password FROM pessoas WHERE email = '${email_param}'
+            SELECT id_pessoa, email, password, id_tipo FROM pessoas WHERE email = '${email_param}'
         `;
 
         const [users, metadata] = await sequelize.query(query, { type: sequelize.QueryTypes.SELECT });
