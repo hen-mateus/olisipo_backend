@@ -14,6 +14,32 @@ reuniaoRHController.list = async (req, res) => {
     }
 };
 
+reuniaoRHController.listManagers = async (req, res) => {
+         const id_pessoa_param = req.userId;
+
+    try {
+        const query = `
+            SELECT reuniao_rh.*, pessoa_info_1.nome_pessoa AS nome_pessoa_1, tipo_pessoa_1.tipo AS tipo_pessoa_1, 
+            pessoa_info_2.nome_pessoa AS nome_pessoa_2, tipo_pessoa_2.tipo AS tipo_pessoa_2 
+            FROM reuniao_rh 
+            JOIN relacao_pessoas_reuniao AS pessoa1 ON reuniao_rh.id_reuniao = pessoa1.id_reuniao 
+            JOIN pessoas AS pessoa_info_1 ON pessoa1.id_pessoa = pessoa_info_1.id_pessoa 
+            JOIN tipo_de_pessoas AS tipo_pessoa_1 ON pessoa_info_1.id_tipo = tipo_pessoa_1.id_tipo 
+            JOIN relacao_pessoas_reuniao AS pessoa2 ON reuniao_rh.id_reuniao = pessoa2.id_reuniao 
+            JOIN pessoas AS pessoa_info_2 ON pessoa2.id_pessoa = pessoa_info_2.id_pessoa 
+            JOIN tipo_de_pessoas AS tipo_pessoa_2 ON pessoa_info_2.id_tipo = tipo_pessoa_2.id_tipo 
+            WHERE pessoa1.id_pessoa < pessoa2.id_pessoa 
+            AND confirmar_reuniao IS NULL
+            AND pessoa2.id_pessoa = ${id_pessoa_param};
+        `;
+        const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
+
+        res.json({ success: true, data: data });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
 reuniaoRHController.getId = async (req, res) => {
     const { id } = req.params;
 
