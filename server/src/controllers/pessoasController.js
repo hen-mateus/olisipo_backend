@@ -78,6 +78,33 @@ const sendWelcomeEmail = (email, nome, senha) => {
         }
     });
 };
+const enviarCodMail = (email, code) => {
+    const transporter = nodemailer.createTransport({
+        // Configurações do seu serviço de e-mail (ex: Gmail, Outlook, etc.)
+        host: 'smtp.office365.com',  // Servidor SMTP do Outlook
+        port: 587,  // Porta SMTP padrão
+        secure: false,  // Define se a conexão deve usar SSL/TLS (no caso do Outlook, deixe como false)
+        auth: {
+            user: 'olisipoteste@outlook.pt',
+            pass: 'Testeolisipo',
+        },
+    });
+
+    const mailOptions = {
+        from: 'olisipoteste@outlook.pt',
+        to: email,
+        subject: 'Codigo de Confirmação',
+        text: `Olá,\n\nRecebemos uma solicitação para redefinir sua senha.\n\nPara redefinir sua senha, insira o código de confirmação abaixo:\n\n${code}\n\nCaso não tenha solicitado a redefinição de senha, ignore este e-mail.`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email enviado: ' + info.response);
+        }
+    });
+};
 
 pessoasController.login = async (req, res) => {
     const { email_param, pass_param } = req.body;
@@ -304,5 +331,18 @@ pessoasController.updatePorEmail = async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 };
+
+
+pessoasController.enviarMail = async (req, res) => {
+    const {
+        email_param,
+        code
+    } = req.body;
+
+    enviarCodMail(email_param, code);
+};
+
+
+
 
 module.exports = pessoasController;
