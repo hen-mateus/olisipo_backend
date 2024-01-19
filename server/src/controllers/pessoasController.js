@@ -93,8 +93,8 @@ const enviarCodMail = (email, code) => {
     const mailOptions = {
         from: 'olisipoteste@outlook.pt',
         to: email,
-        subject: 'Codigo de Confirmação',
-        text: `Olá,\n\nRecebemos uma solicitação para redefinir sua senha.\n\nPara redefinir sua senha, insira o código de confirmação abaixo:\n\n${code}\n\nCaso não tenha solicitado a redefinição de senha, ignore este e-mail.`,
+        subject: 'Olisipo Portal - Codigo de Confirmação',
+        text: `Olá,\n\nRecebemos um pedido para redefinir a sua senha no Olisipo Portal.\n\nPara proceder com a redefinição, insira o código de confirmação abaixo no campo predestinado:\n\n${code}\n\nSe não solicitou a redefinição de senha, por favor, ignore este e-mail.`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
