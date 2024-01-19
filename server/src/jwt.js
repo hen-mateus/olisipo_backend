@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const createTokens = (user) => {
+    console.log("Utilizador no JWT:" + user);
     const accessToken = jwt.sign(
         { username: user.email, id: user.id_pessoa, id_tipo: user.id_tipo, },
         "jwtolisipo"
