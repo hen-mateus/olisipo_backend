@@ -28,8 +28,7 @@ LEFT JOIN notificacoes ON tipos_possiveis.tipo_notificacao = notificacoes.tipo_n
 WHERE notificacoes.id_pessoa = ${id_pessoa_param}
 GROUP BY tipos_possiveis.tipo_notificacao;
 
-            )
-        GROUP BY tipos_possiveis.tipo_notificacao;`;
+          `;
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         res.json({ success: true, data: data });
