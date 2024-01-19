@@ -78,6 +78,33 @@ const sendWelcomeEmail = (email, nome, senha) => {
         }
     });
 };
+const enviarCodMail = (email, code) => {
+    const transporter = nodemailer.createTransport({
+        // Configurações do seu serviço de e-mail (ex: Gmail, Outlook, etc.)
+        host: 'smtp.office365.com',  // Servidor SMTP do Outlook
+        port: 587,  // Porta SMTP padrão
+        secure: false,  // Define se a conexão deve usar SSL/TLS (no caso do Outlook, deixe como false)
+        auth: {
+            user: 'olisipoteste@outlook.pt',
+            pass: 'Testeolisipo',
+        },
+    });
+
+    const mailOptions = {
+        from: 'olisipoteste@outlook.pt',
+        to: email,
+        subject: 'Olisipo Portal - Codigo de Confirmação',
+        text: `Olá,\n\nRecebemos um pedido para redefinir a sua senha no Olisipo Portal.\n\nPara proceder com a redefinição, insira o código de confirmação abaixo no campo predestinado:\n\n${code}\n\nSe não solicitou a redefinição de senha, por favor, ignore este e-mail.`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email enviado: ' + info.response);
+        }
+    });
+};
 
 pessoasController.login = async (req, res) => {
     const { email_param, pass_param } = req.body;
@@ -279,5 +306,43 @@ pessoasController.updateDados = async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 };
+
+pessoasController.updatePorEmail = async (req, res) => {
+    const {
+        pass_pessoa_param,
+        email_param
+    } = req.body;
+
+    try {
+        let hashedPassword = pass_pessoa_param;
+
+        if (pass_pessoa_param) {
+            hashedPassword = await bcrypt.hash(pass_pessoa_param, 10);
+        }
+
+        const query = `
+            UPDATE pessoas SET password='${hashedPassword}' WHERE email='${email_param}';
+        `;
+
+        await sequelize.query(query);
+
+        res.json({ success: true, message: 'Pessoa atualizada com sucesso!' });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
+
+pessoasController.enviarMail = async (req, res) => {
+    const {
+        email_param,
+        code
+    } = req.body;
+
+    enviarCodMail(email_param, code);
+};
+
+
+
 
 module.exports = pessoasController;
