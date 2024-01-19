@@ -281,15 +281,16 @@ pessoasController.updateDados = async (req, res) => {
 };
 
 pessoasController.updatePorEmail = async (req, res) => {
-    const email_param = req.userEmail;
-
-    const pass_param = req.body.pass_pessoa_param;
+    const {
+        pass_pessoa_param,
+        email_param
+    } = req.body;
 
     try {
-        let hashedPassword = pass_param;
+        let hashedPassword = pass_pessoa_param;
 
-        if (pass_param) {
-            hashedPassword = await bcrypt.hash(pass_param, 10);
+        if (pass_pessoa_param) {
+            hashedPassword = await bcrypt.hash(pass_pessoa_param, 10);
         }
 
         const query = `
