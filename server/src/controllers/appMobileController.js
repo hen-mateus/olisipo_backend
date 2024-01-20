@@ -15,7 +15,9 @@ appMobileController.list = async (req, res) => {
         const query2 = 'SELECT noticias.*, tipo_noticia.tipo_noticia FROM noticias INNER JOIN tipo_noticia ON noticias.id_tipo_noticia = tipo_noticia.id_tipo_noticia WHERE noticias.noticia_publicada = true;';
         const noticias = await sequelize.query(query2, { type: Sequelize.QueryTypes.SELECT });
         const query3 = 'SELECT * FROM tipo_noticia;';
+
         const tipoNoticias = await sequelize.query(query3, { type: Sequelize.QueryTypes.SELECT });
+		console.log(query3 + "dsadsadsa"+ tipoNoticias);
 
         const query4 = `SELECT * FROM pessoas  WHERE id_pessoa = ${id_pessoa_param}`;
         const dadosPessoais = await sequelize.query(query4, { type: Sequelize.QueryTypes.SELECT });
