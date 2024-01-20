@@ -97,14 +97,6 @@ reuniaoRHController.create = async (req, res) => {
         if (pesIdResult.length > 0 && pesIdResult[0].pes_id_pessoa !== undefined) {
             const pes_id_pessoa_param = pesIdResult[0].pes_id_pessoa;
 
-            const inserirRelacaoManQuery = `
-                CALL inserirrelacaopessoasreuniao_man(
-                    ${pes_id_pessoa_param},
-                    ${novoIdReuniao}
-                );
-            `;
-            await sequelize.query(inserirRelacaoManQuery);
-
             const inserirRelacaoColQuery = `
                 CALL inserirrelacaopessoasreuniao_col(
                     ${id_pessoa_param},
@@ -112,6 +104,14 @@ reuniaoRHController.create = async (req, res) => {
                 );
             `;
             await sequelize.query(inserirRelacaoColQuery);
+
+            const inserirRelacaoManQuery = `
+            CALL inserirrelacaopessoasreuniao_man(
+                ${pes_id_pessoa_param},
+                ${novoIdReuniao}
+            );
+        `;
+        await sequelize.query(inserirRelacaoManQuery);
 
             res.json({ success: true, message: 'Reunião inserida com sucesso!' });
         } else {
