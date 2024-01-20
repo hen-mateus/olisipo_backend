@@ -15,14 +15,19 @@ appMobileController.list = async (req, res) => {
 
         const query6 = `
 		SELECT
-           
-            estados.tipo_estado,
-            despesas_viatura_propria.data_deslocacao
-        FROM pessoas
-        LEFT JOIN despesas_viatura_propria ON despesas_viatura_propria.id_pessoa = pessoas.id_pessoa
-        LEFT JOIN relacao_despesas_estado ON relacao_despesas_estado.id_despesa = despesas_viatura_propria.id_despesa
-        LEFT JOIN estados ON relacao_despesas_estado.id_estado = estados.id_estado
-        WHERE pessoas.id_pessoa =${id_pessoa_param}`;
+    estados.tipo_estado,
+    despesas_viatura_propria.data_deslocacao
+FROM pessoas
+LEFT JOIN despesas_viatura_propria ON despesas_viatura_propria.id_pessoa = pessoas.id_pessoa
+LEFT JOIN relacao_despesas_estado ON relacao_despesas_estado.id_despesa = despesas_viatura_propria.id_despesa
+LEFT JOIN estados ON relacao_despesas_estado.id_estado = estados.id_estado
+WHERE pessoas.id_pessoa = ${id_pessoa_param}
+AND relacao_despesas_estado.data_estado_despesas = (
+    SELECT MAX(data_estado_despesas)
+    FROM relacao_despesas_estado
+    WHERE id_despesa = despesas_viatura_propria.id_despesa
+);
+`;
         const despesasViatura = await sequelize.query(query6, { type: Sequelize.QueryTypes.SELECT });
 
         const query7 = `
@@ -39,38 +44,53 @@ appMobileController.list = async (req, res) => {
 
         const query8 = `
 		SELECT
-           
-            estados.tipo_estado,
-            ferias.data_submissao
-        FROM pessoas
-        LEFT JOIN ferias ON ferias.id_pessoa = pessoas.id_pessoa
-        LEFT JOIN relacao_ferias_estado ON relacao_ferias_estado.id_ferias = ferias.id_ferias
-        LEFT JOIN estados ON relacao_ferias_estado.id_estado = estados.id_estado
-        WHERE pessoas.id_pessoa =${id_pessoa_param}`;
+    estados.tipo_estado,
+    ferias.data_comeco,
+	ferias.data_fim
+FROM pessoas
+LEFT JOIN ferias ON ferias.id_pessoa = pessoas.id_pessoa
+LEFT JOIN relacao_ferias_estado ON relacao_ferias_estado.id_ferias = ferias.id_ferias
+LEFT JOIN estados ON relacao_ferias_estado.id_estado = estados.id_estado
+WHERE pessoas.id_pessoa = ${id_pessoa_param}
+AND relacao_ferias_estado.data_estado_ferias = (
+    SELECT MAX(data_estado_ferias)
+    FROM relacao_ferias_estado
+    WHERE id_ferias = ferias.id_ferias
+);
+`;
         const ferias = await sequelize.query(query8, { type: Sequelize.QueryTypes.SELECT });
 
         const query9 = `
 		SELECT
-            
-            estados.tipo_estado,
-            relatorio_horas.data_relatorio_horas
-        FROM pessoas
-        LEFT JOIN relatorio_horas ON relatorio_horas.id_pessoa = pessoas.id_pessoa
-        LEFT JOIN relacao_horas_estado ON relacao_horas_estado.id_relatorio_horas = relatorio_horas.id_relatorio_horas
-        LEFT JOIN estados ON relacao_horas_estado.id_estado = estados.id_estado
-        WHERE pessoas.id_pessoa =${id_pessoa_param}`;
+    estados.tipo_estado,
+    relatorio_horas.mes
+FROM pessoas
+LEFT JOIN relatorio_horas ON relatorio_horas.id_pessoa = pessoas.id_pessoa
+LEFT JOIN relacao_horas_estado ON relacao_horas_estado.id_relatorio_horas = relatorio_horas.id_relatorio_horas
+LEFT JOIN estados ON relacao_horas_estado.id_estado = estados.id_estado
+WHERE pessoas.id_pessoa = ${id_pessoa_param}
+AND relacao_horas_estado.data_estado_relatorio_horas = (
+    SELECT MAX(data_estado_relatorio_horas)
+    FROM relacao_horas_estado
+    WHERE id_relatorio_horas = relatorio_horas.id_relatorio_horas
+);`;
         const horas = await sequelize.query(query9, { type: Sequelize.QueryTypes.SELECT });
 
         const query10 = `
 		SELECT
-            
-            estados.tipo_estado,
-            ajudas_custo.valor_ajuda
-        FROM pessoas
-        LEFT JOIN ajudas_custo ON ajudas_custo.id_pessoa = pessoas.id_pessoa
-        LEFT JOIN relacao_ajudas_estado ON relacao_ajudas_estado.id_ajuda_custo = ajudas_custo.id_ajuda_custo
-        LEFT JOIN estados ON relacao_ajudas_estado.id_estado = estados.id_estado
-        WHERE pessoas.id_pessoa =${id_pessoa_param}`;
+    estados.tipo_estado,
+    ajudas_custo.valor_ajuda
+FROM pessoas
+LEFT JOIN ajudas_custo ON ajudas_custo.id_pessoa = pessoas.id_pessoa
+LEFT JOIN relacao_ajudas_estado ON relacao_ajudas_estado.id_ajuda_custo = ajudas_custo.id_ajuda_custo
+LEFT JOIN estados ON relacao_ajudas_estado.id_estado = estados.id_estado
+WHERE pessoas.id_pessoa = ${id_pessoa_param}
+AND relacao_ajudas_estado.data_estado_ajudascusto = (
+    SELECT MAX(data_estado_ajudascusto)
+    FROM relacao_ajudas_estado
+    WHERE id_ajuda_custo = ajudas_custo.id_ajuda_custo
+);
+`;
         const ajudas = await sequelize.query(query10, { type: Sequelize.QueryTypes.SELECT });
 
         const query11 = `
@@ -87,13 +107,7 @@ appMobileController.list = async (req, res) => {
         JOIN relacao_pessoas_reuniao AS pessoa2 ON reuniao_rh.id_reuniao = pessoa2.id_reuniao
         JOIN pessoas AS pessoa_info_2 ON pessoa2.id_pessoa = pessoa_info_2.id_pessoa
         JOIN tipo_de_pessoas AS tipo_pessoa_2 ON pessoa_info_2.id_tipo = tipo_pessoa_2.id_tipo
-        WHERE
-            (
-                pessoa1.id_pessoa = ${id_pessoa_param}
-                OR pessoa2.id_pessoa = ${id_pessoa_param}
-            )
-            AND pessoa1.id_pessoa < pessoa2.id_pessoa
-            AND reuniao_rh.confirmar_reuniao IS NULL;`;
+        WHERE pessoa1.id_pessoa = ${id_pessoa_param} AND pessoa1.id_pessoa < pessoa2.id_pessoa;`;
         const reunioes = await sequelize.query(query11, { type: Sequelize.QueryTypes.SELECT });
 
 
