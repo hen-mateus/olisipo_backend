@@ -104,7 +104,7 @@ reuniaoRHController.create = async (req, res) => {
                 );
             `;
             await sequelize.query(inserirRelacaoColQuery);
-/*
+
             const inserirRelacaoManQuery = `
             CALL inserirrelacaopessoasreuniao_man(
                 ${pes_id_pessoa_param},
@@ -112,7 +112,6 @@ reuniaoRHController.create = async (req, res) => {
             );
         `;
             await sequelize.query(inserirRelacaoManQuery);
-*/
             res.json({ success: true, message: 'Reunião inserida com sucesso!' });
         } else {
             res.status(404).json({ success: false, error: 'Pes_id_pessoa não encontrado para o id_pessoa informado.' });
