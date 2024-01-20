@@ -5,7 +5,7 @@ const estatisticasController = {};
 
 estatisticasController.getEstatisticas = async (req, res) => {
     try {
-        const query = 'SELECT * FROM estatisticas_organizacao;';
+        const query = 'SELECT * FROM estatisticas_olisipo;';
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         res.json({ success: true, data: data });
