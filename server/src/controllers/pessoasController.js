@@ -162,7 +162,7 @@ pessoasController.listManagers = async (req, res) => {
         SELECT pessoas.*
         FROM pessoas
         JOIN tipo_de_pessoas ON pessoas.id_tipo = tipo_de_pessoas.id_tipo
-        WHERE tipo_de_pessoas.tipo = 'Manager' and tipo_de_pessoas.tipo = 'Admin';
+        WHERE tipo_de_pessoas.tipo = 'Manager' or tipo_de_pessoas.tipo = 'Admin';
     `;
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
