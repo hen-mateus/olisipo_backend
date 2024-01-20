@@ -12,13 +12,6 @@ appMobileController.list = async (req, res) => {
         const query1 = 'SELECT * FROM tipo_parceria;';
         const tipoParcerias = await sequelize.query(query1, { type: Sequelize.QueryTypes.SELECT });
 
-        const query2 = 'SELECT noticias.*, tipo_noticia.tipo_noticia FROM noticias INNER JOIN tipo_noticia ON noticias.id_tipo_noticia = tipo_noticia.id_tipo_noticia WHERE noticias.noticia_publicada = true;';
-        const noticias = await sequelize.query(query2, { type: Sequelize.QueryTypes.SELECT });
-        const query3 = 'SELECT * FROM tipo_noticia;';
-
-        const tipoNoticias = await sequelize.query(query3, { type: Sequelize.QueryTypes.SELECT });
-		console.log(query3 + "dsadsadsa"+ tipoNoticias);
-
         const query4 = `SELECT * FROM pessoas  WHERE id_pessoa = ${id_pessoa_param}`;
         const dadosPessoais = await sequelize.query(query4, { type: Sequelize.QueryTypes.SELECT });
 
@@ -115,17 +108,24 @@ appMobileController.list = async (req, res) => {
         ${id_pessoa_param} and confirmacao_submissao_recibo= true;`;
         const recibos = await sequelize.query(query12, { type: Sequelize.QueryTypes.SELECT });
 
-        res.json({ success: true, parcerias: parcerias, tipoParcerias: tipoParcerias, noticias: noticias, tipoNoticias: tipoNoticias, dadosPessoais: dadosPessoais, informacoesProfissionais: informacoesProfissionais, despesasViatura: despesasViatura, faltas: faltas, ferias: ferias, horas: horas, ajudas: ajudas, reunioes: reunioes, recibos: recibos });
+        res.json({ success: true, parcerias: parcerias, tipoParcerias: tipoParcerias, dadosPessoais: dadosPessoais, informacoesProfissionais: informacoesProfissionais, despesasViatura: despesasViatura, faltas: faltas, ferias: ferias, horas: horas, ajudas: ajudas, reunioes: reunioes, recibos: recibos });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
 };
 
+appMobileController.listNoticias = async (req, res) => {
 
+    try {
+        const query2 = 'SELECT noticias.*, tipo_noticia.tipo_noticia FROM noticias INNER JOIN tipo_noticia ON noticias.id_tipo_noticia = tipo_noticia.id_tipo_noticia WHERE noticias.noticia_publicada = true;';
+        const noticias = await sequelize.query(query2, { type: Sequelize.QueryTypes.SELECT });
+        const query3 = 'SELECT * FROM tipo_noticia;';
+        const tipoNoticias = await sequelize.query(query3, { type: Sequelize.QueryTypes.SELECT });
 
-
-
-
-
+        res.json({ success: true, noticias: noticias, tipoNoticias: tipoNoticias });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
 
 module.exports = appMobileController;
