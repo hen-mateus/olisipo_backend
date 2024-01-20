@@ -5,6 +5,6 @@ const { createTokens, validateToken } = require("../jwt");
 
 
 router.get('/', validateToken, appMobileController.list);
-router.get('/noticias', appMobileController.listNoticias);
+router.get('/noticiasparcerias', appMobileController.listNoticiasParcerias);
 
 module.exports = router;
