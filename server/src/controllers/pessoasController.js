@@ -258,13 +258,15 @@ pessoasController.updateindividual = async (req, res) => {
         ativa_param,
         deleted_param,
         curriculo_param,
-        cliente_param
+        cliente_param,
+        pes_id_pessoa_param,
+        id_tipo_param
     } = req.body;
 
     try {
 
         const query = `
-        CALL AtualizarPessoa(
+        CALL atualizarpessoaindividual(
           ${id},
           ${nome_pessoa_param ? `'${nome_pessoa_param}'` : 'NULL'},
           ${pass_pessoa_param ? `'${pass_pessoa_param}'` : 'NULL'},
@@ -272,7 +274,9 @@ pessoasController.updateindividual = async (req, res) => {
           ${ativa_param !== undefined ? ativa_param : 'NULL'},
           ${deleted_param !== undefined ? deleted_param : 'NULL'},
           ${curriculo_param ? `'${curriculo_param}'` : 'NULL'},
-          ${cliente_param ? `'${cliente_param}'` : 'NULL'}
+          ${cliente_param ? `'${cliente_param}'` : 'NULL'},
+          ${pes_id_pessoa_param !== undefined ? pes_id_pessoa_param : 'NULL'},
+          ${id_tipo_param !== undefined ? id_tipo_param : 'NULL'}
         )
       `;
 
@@ -283,6 +287,7 @@ pessoasController.updateindividual = async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 };
+
 
 
 pessoasController.updateDados = async (req, res) => {
