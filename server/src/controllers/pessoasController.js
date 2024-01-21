@@ -262,17 +262,12 @@ pessoasController.updateindividual = async (req, res) => {
     } = req.body;
 
     try {
-        let hashedPassword = pass_pessoa_param;
-
-        if (pass_pessoa_param) {
-            hashedPassword = await bcrypt.hash(pass_pessoa_param, 10);
-        }
 
         const query = `
         CALL AtualizarPessoa(
           ${id},
           ${nome_pessoa_param ? `'${nome_pessoa_param}'` : 'NULL'},
-          '${hashedPassword}',
+          ${pass_pessoa_param ? `'${pass_pessoa_param}'` : 'NULL'},
           ${email_param ? `'${email_param}'` : 'NULL'},
           ${ativa_param !== undefined ? ativa_param : 'NULL'},
           ${deleted_param !== undefined ? deleted_param : 'NULL'},
