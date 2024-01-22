@@ -17,7 +17,7 @@ router.post('/login', pessoasController.login);
 router.post('/register', pessoasController.register);
 router.post('/logout', validateToken, (req, res) => {
     res.clearCookie("access-token");
-    res.json({ success: true, message: 'Usuário desconectado com sucesso' });
+    res.json({ success: true, message: 'Utilizador desconectado com sucesso' });
 });
 
 module.exports = router;
