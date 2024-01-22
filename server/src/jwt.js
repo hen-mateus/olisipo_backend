@@ -16,7 +16,7 @@ const validateToken = (req, res, next) => {
     }
     try {
         const decoded = jwt.verify(token.split(' ')[1], 'jwtolisipo');
-        // Faça algo com o `decoded`, como adicionar o usuário ao objeto `req` ou `res`
+        // Faça algo com o `decoded`, como adicionar o utilizador ao objeto `req` ou `res`
         req.userId = decoded.id;
         next();
     } catch (error) {

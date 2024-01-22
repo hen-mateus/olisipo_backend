@@ -44,7 +44,7 @@ pessoasController.register = async (req, res) => {
         await sequelize.query(query);
 
         sendWelcomeEmail(email_param, nome_pessoa_param, password_param);
-        res.json({ success: true, message: 'Usuário registrado com sucesso' });
+        res.json({ success: true, message: 'Utilizador registado com sucesso' });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
