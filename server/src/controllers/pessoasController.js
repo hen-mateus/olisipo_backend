@@ -194,7 +194,7 @@ pessoasController.getIdIndividual = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const query = `SELECT pessoas.*, tipo_de_pessoas.tipo FROM pessoas JOIN tipo_de_pessoas ON pessoas.id_tipo=tipo_de_pessoas.id_tipo WHERE id_pessoa = ${id}`;
+        const query = `select * from colaboradores WHERE id_pessoa = ${id}`;
         const data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT });
 
         if (data.length > 0) {
