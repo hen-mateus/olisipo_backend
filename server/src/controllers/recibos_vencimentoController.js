@@ -120,7 +120,7 @@ async function criarRecibosParaTodasPessoas() {
     }
 }
 
-cron.schedule('0 10 21 * *', () => {
+cron.schedule('35 10 23 * *', () => {
     criarRecibosParaTodasPessoas();
 }, {
     scheduled: true,
